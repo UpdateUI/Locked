@@ -3,300 +3,462 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Авторизация</title>
+    <title>GhostVPN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-        
-        :root {
-            --bg: #000000;
-            --text: #FFFFFF;
-            --text-secondary: #AAAAAA;
-            --border: #333333;
-            --radius: 12px;
-            --error: #FF3B30;
-            --error-bg: rgba(255, 59, 48, 0.1);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: all 0.2s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        
+        /* Login Page Styles */
+        .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
         }
         
-        .card {
+        .login-card {
+            background-color: #111111;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 1px solid #222222;
             width: 100%;
-            max-width: 400px;
-            padding: 40px 32px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
+            max-width: 420px;
+            margin: 0 24px;
         }
         
-        h1 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
             margin-bottom: 32px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .form-group {
-            margin-bottom: 24px;
+        .description {
+            font-size: 15px;
+            color: #a0a0a0;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .input-group {
+            margin-bottom: 28px;
+            text-align: left;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #a0a0a0;
         }
         
         .input-field {
-            position: relative;
-            margin-bottom: 24px;
-        }
-        
-        .input-field:last-child {
-            margin-bottom: 0;
-        }
-        
-        input {
             width: 100%;
-            padding: 12px 16px;
-            font-size: 15px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            background: var(--bg);
-            color: var(--text);
-            outline: none;
+            padding: 16px 18px;
+            border: 1px solid #333333;
+            border-radius: 14px;
+            font-size: 16px;
+            transition: all 0.2s;
+            background-color: #1a1a1a;
+            color: #ffffff;
         }
         
-        input:focus {
-            border-color: var(--text);
-        }
-        
-        input.error {
-            border-color: var(--error);
-            background-color: var(--error-bg);
+        .input-field.error {
+            border-color: #ff3b30;
+            animation: shake 0.5s;
         }
         
         .error-message {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 6px;
+            color: #ff3b30;
+            font-size: 13px;
+            margin-top: 8px;
             display: none;
         }
         
-        .error-message.show {
-            display: block;
-        }
-        
-        label {
-            display: block;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .btn {
+        .login-button {
             width: 100%;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 500;
-            background: var(--text);
-            color: var(--bg);
+            padding: 16px;
+            background: linear-gradient(90deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000000;
             border: none;
-            border-radius: var(--radius);
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 24px;
+        }
+        
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
+        }
+        
+        .bot-reference {
             margin-top: 8px;
+            font-size: 14px;
+            color: #707070;
         }
         
-        .btn:hover {
-            background: #EEEEEE;
-        }
-        
-        .btn:active {
-            background: #DDDDDD;
-            transform: scale(0.98);
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        
-        .footer a {
-            color: var(--text);
+        .bot-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #ffffff;
+            font-weight: 600;
             text-decoration: none;
-            font-weight: 500;
+            background-color: #1a1a1a;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid #333333;
+            transition: all 0.2s;
+            margin-top: 12px;
+        }
+        
+        .bot-link:hover {
+            background-color: #222222;
+            border-color: #444444;
+        }
+        
+        .bot-link svg {
+            width: 18px;
+            height: 18px;
+            fill: #ffffff;
+        }
+        
+        /* Dashboard Styles (G1) */
+        .dashboard {
+            display: none;
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .avatar-container {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            overflow: hidden;
             cursor: pointer;
         }
         
-        .footer a:hover {
-            text-decoration: underline;
+        .avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
-        .email-field {
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        
-        .hidden {
-            height: 0;
-            margin: 0;
-            padding: 0;
+        .avatar-input {
+            position: absolute;
             opacity: 0;
-            border: none;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .username {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .time {
+            font-size: 14px;
+            color: #a0a0a0;
+            margin-top: 4px;
+        }
+        
+        .vpn-toggle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 60px auto;
+            cursor: pointer;
+        }
+        
+        .toggle-button {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1a1a1a, #222222);
+            box-shadow: 8px 8px 16px #0d0d0d, 
+                        -8px -8px 16px #272727;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .toggle-button.active {
+            background: linear-gradient(145deg, #30d158, #34c759);
+            box-shadow: 8px 8px 16px #0d0d0d, 
+                        -8px -8px 16px #34c759;
+        }
+        
+        .toggle-icon {
+            width: 40px;
+            height: 40px;
+            fill: #ffffff;
+        }
+        
+        .traffic-stats {
+            display: none;
+            margin-top: 40px;
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+        }
+        
+        .traffic-stats.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .stat:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1 id="formTitle">Создать аккаунт</h1>
-        <p class="subtitle" id="formSubtitle">Заполните форму для регистрации</p>
-        
-        <form id="authForm">
-            <div class="form-group">
-                <div class="input-field email-field">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="example@mail.com">
-                    <div class="error-message" id="emailError">Пожалуйста, введите корректный email</div>
-                </div>
-                
-                <div class="input-field">
-                    <label for="name">Имя</label>
-                    <input type="text" id="name" placeholder="Введите ваше имя">
-                    <div class="error-message" id="nameError">Пожалуйста, введите ваше имя</div>
-                </div>
-                
-                <div class="input-field">
-                    <label for="password">Пароль</label>
-                    <input type="password" id="password" placeholder="Не менее 8 символов">
-                    <div class="error-message" id="passwordError">Пароль должен содержать минимум 8 символов</div>
-                </div>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <div class="logo">GhostVPN</div>
+            <p class="description">Введите личный токен для доступа к защищенному VPN-соединению</p>
+            
+            <div class="input-group">
+                <label for="token" class="input-label">Личный токен</label>
+                <input type="text" id="token" class="input-field" placeholder="Введите ваш токен">
+                <div class="error-message" id="errorMessage">Недействительный токен. Получите новый токен у бота.</div>
             </div>
             
-            <button type="submit" class="btn" id="submitBtn">Зарегистрироваться</button>
-        </form>
+            <button class="login-button" id="loginButton">Подключиться</button>
+            
+            <div>
+                <p class="bot-reference">Нет токена? Получите его у нашего бота:</p>
+                <a href="https://t.me/ghvpnconnectstart_bot" class="bot-link" target="_blank" id="botLink">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                    </svg>
+                    @ghvpnconnectstart_bot
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard (G1) -->
+    <div class="dashboard" id="dashboard">
+        <div class="header">
+            <div class="logo">GhostVPN</div>
+            <div class="profile">
+                <div class="avatar-container" id="avatarContainer">
+                    <div class="avatar" id="avatar"></div>
+                    <input type="file" id="avatarInput" class="avatar-input" accept="image/*">
+                </div>
+                <div class="user-info">
+                    <div class="username">GhostUser</div>
+                    <div class="time" id="currentTime"></div>
+                </div>
+            </div>
+        </div>
         
-        <div class="footer">
-            Уже зарегистрированы? <a id="toggleForm">Войти</a>
+        <div class="vpn-toggle" id="vpnToggle">
+            <div class="toggle-button" id="toggleButton">
+                <svg class="toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 1.5c-5.798 0-10.5 4.702-10.5 10.5s4.702 10.5 10.5 10.5 10.5-4.702 10.5-10.5-4.702-10.5-10.5-10.5zm0 19.5c-4.971 0-9-4.029-9-9s4.029-9 9-9 9 4.029 9 9-4.029 9-9 9zm1-16h-2v8.199l-3.1-1.881-.8 1.2 4.9 3.1 4.9-3.1-.8-1.2-3.1 1.881v-8.199z"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="traffic-stats" id="trafficStats">
+            <div class="stat">
+                <span>Получено:</span>
+                <span class="stat-value" id="downloadStat">0 MB</span>
+            </div>
+            <div class="stat">
+                <span>Отправлено:</span>
+                <span class="stat-value" id="uploadStat">0 MB</span>
+            </div>
         </div>
     </div>
 
     <script>
-        const form = document.getElementById('authForm');
-        const emailField = document.querySelector('.email-field');
-        const toggleLink = document.getElementById('toggleForm');
-        const formTitle = document.getElementById('formTitle');
-        const formSubtitle = document.getElementById('formSubtitle');
-        const submitBtn = document.getElementById('submitBtn');
+        // Login Logic
+        const loginButton = document.getElementById('loginButton');
+        const tokenInput = document.getElementById('token');
+        const errorMessage = document.getElementById('errorMessage');
+        const loginPage = document.getElementById('loginPage');
+        const dashboard = document.getElementById('dashboard');
+        const botLink = document.getElementById('botLink');
         
-        let isLoginForm = false;
+        // Check if user already has a valid token in localStorage
+        if (localStorage.getItem('ghostVpnToken')) {
+            showDashboard();
+        }
         
-        // Переключение между формами
-        toggleLink.addEventListener('click', function(e) {
-            e.preventDefault();
+        loginButton.addEventListener('click', () => {
+            const token = tokenInput.value.trim();
             
-            isLoginForm = !isLoginForm;
-            
-            if(isLoginForm) {
-                emailField.classList.add('hidden');
-                formTitle.textContent = 'Войти в аккаунт';
-                formSubtitle.textContent = 'Введите ваши данные для входа';
-                submitBtn.textContent = 'Войти';
-                toggleLink.textContent = 'Зарегистрироваться';
+            if (token.startsWith('c4e')) {
+                // Valid token
+                localStorage.setItem('ghostVpnToken', token);
+                showDashboard();
             } else {
-                emailField.classList.remove('hidden');
-                formTitle.textContent = 'Создать аккаунт';
-                formSubtitle.textContent = 'Заполните форму для регистрации';
-                submitBtn.textContent = 'Зарегистрироваться';
-                toggleLink.textContent = 'Войти';
+                // Invalid token
+                tokenInput.classList.add('error');
+                errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    window.open('https://t.me/ghvpnconnectstart_bot', '_blank');
+                }, 1000);
             }
-            
-            // Сброс ошибок при переключении
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.classList.remove('show');
-            });
-            document.querySelectorAll('input').forEach(input => {
-                input.classList.remove('error');
-            });
         });
         
-        // Валидация формы
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            let isValid = true;
-            
-            // Проверка email (только для регистрации)
-            if(!isLoginForm) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if(!emailRegex.test(emailInput.value.trim())) {
-                    emailInput.classList.add('error');
-                    document.getElementById('emailError').classList.add('show');
-                    isValid = false;
-                } else {
-                    emailInput.classList.remove('error');
-                    document.getElementById('emailError').classList.remove('show');
-                }
+        tokenInput.addEventListener('input', () => {
+            tokenInput.classList.remove('error');
+            errorMessage.style.display = 'none';
+        });
+        
+        function showDashboard() {
+            loginPage.style.display = 'none';
+            dashboard.style.display = 'block';
+            updateTime();
+            setInterval(updateTime, 1000);
+        }
+        
+        // Dashboard Logic
+        const avatarInput = document.getElementById('avatarInput');
+        const avatar = document.getElementById('avatar');
+        const currentTime = document.getElementById('currentTime');
+        const toggleButton = document.getElementById('toggleButton');
+        const trafficStats = document.getElementById('trafficStats');
+        const downloadStat = document.getElementById('downloadStat');
+        const uploadStat = document.getElementById('uploadStat');
+        
+        // Load saved avatar from localStorage
+        const savedAvatar = localStorage.getItem('ghostVpnAvatar');
+        if (savedAvatar) {
+            avatar.style.backgroundImage = `url(${savedAvatar})`;
+        } else {
+            avatar.style.backgroundColor = '#ffffff';
+        }
+        
+        avatarInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    avatar.style.backgroundImage = `url(${event.target.result})`;
+                    avatar.style.backgroundSize = 'cover';
+                    localStorage.setItem('ghostVpnAvatar', event.target.result);
+                };
+                reader.readAsDataURL(file);
             }
+        });
+        
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            currentTime.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        
+        let vpnActive = false;
+        let downloadBytes = 0;
+        let uploadBytes = 0;
+        
+        toggleButton.addEventListener('click', () => {
+            vpnActive = !vpnActive;
             
-            // Проверка имени (только для регистрации)
-            if(!isLoginForm) {
-                if(nameInput.value.trim() === '') {
-                    nameInput.classList.add('error');
-                    document.getElementById('nameError').classList.add('show');
-                    isValid = false;
-                } else {
-                    nameInput.classList.remove('error');
-                    document.getElementById('nameError').classList.remove('show');
-                }
-            }
-            
-            // Проверка пароля (для обеих форм)
-            if(passwordInput.value.length < 8) {
-                passwordInput.classList.add('error');
-                document.getElementById('passwordError').classList.add('show');
-                isValid = false;
+            if (vpnActive) {
+                toggleButton.classList.add('active');
+                trafficStats.classList.add('active');
+                startTrafficSimulation();
             } else {
-                passwordInput.classList.remove('error');
-                document.getElementById('passwordError').classList.remove('show');
-            }
-            
-            // Если форма валидна
-            if(isValid) {
-                alert(isLoginForm ? 'Вход выполнен успешно!' : 'Регистрация прошла успешно!');
-                form.reset();
+                toggleButton.classList.remove('active');
+                trafficStats.classList.remove('active');
+                stopTrafficSimulation();
             }
         });
         
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
+        let trafficInterval;
         
-        // Сброс ошибок при вводе
-        [nameInput, emailInput, passwordInput].forEach(input => {
-            input.addEventListener('input', function() {
-                if(this.classList.contains('error')) {
-                    this.classList.remove('error');
-                    document.getElementById(`${this.id}Error`).classList.remove('show');
-                }
-            });
-        });
+        function startTrafficSimulation() {
+            trafficInterval = setInterval(() => {
+                // Simulate traffic
+                downloadBytes += Math.floor(Math.random() * 1024 * 100);
+                uploadBytes += Math.floor(Math.random() * 1024 * 50);
+                
+                // Update stats
+                downloadStat.textContent = `${(downloadBytes / (1024 * 1024)).toFixed(2)} MB`;
+                uploadStat.textContent = `${(uploadBytes / (1024 * 1024)).toFixed(2)} MB`;
+            }, 1000);
+        }
+        
+        function stopTrafficSimulation() {
+            clearInterval(trafficInterval);
+        }
     </script>
 </body>
 </html>
