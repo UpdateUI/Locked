@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --bg: #000000;
+            --text: #FFFFFF;
+            --text-secondary: #AAAAAA;
+            --border: #333333;
+            --radius: 12px;
+            --error: #FF3B30;
+            --error-bg: rgba(255, 59, 48, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .card {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 32px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .input-field {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .input-field:last-child {
+            margin-bottom: 0;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 15px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg);
+            color: var(--text);
+            outline: none;
+        }
+        
+        input:focus {
+            border-color: var(--text);
+        }
+        
+        input.error {
+            border-color: var(--error);
+            background-color: var(--error-bg);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        
+        .btn:hover {
+            background: #EEEEEE;
+        }
+        
+        .btn:active {
+            background: #DDDDDD;
+            transform: scale(0.98);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .email-field {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .hidden {
+            height: 0;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 id="formTitle">Создать аккаунт</h1>
+        <p class="subtitle" id="formSubtitle">Заполните форму для регистрации</p>
+        
+        <form id="authForm">
+            <div class="form-group">
+                <div class="input-field email-field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="example@mail.com">
+                    <div class="error-message" id="emailError">Пожалуйста, введите корректный email</div>
+                </div>
+                
+                <div class="input-field">
+                    <label for="name">Имя</label>
+                    <input type="text" id="name" placeholder="Введите ваше имя">
+                    <div class="error-message" id="nameError">Пожалуйста, введите ваше имя</div>
+                </div>
+                
+                <div class="input-field">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" placeholder="Не менее 8 символов">
+                    <div class="error-message" id="passwordError">Пароль должен содержать минимум 8 символов</div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn" id="submitBtn">Зарегистрироваться</button>
+        </form>
+        
+        <div class="footer">
+            Уже зарегистрированы? <a id="toggleForm">Войти</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('authForm');
+        const emailField = document.querySelector('.email-field');
+        const toggleLink = document.getElementById('toggleForm');
+        const formTitle = document.getElementById('formTitle');
+        const formSubtitle = document.getElementById('formSubtitle');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        let isLoginForm = false;
+        
+        // Переключение между формами
+        toggleLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            isLoginForm = !isLoginForm;
+            
+            if(isLoginForm) {
+                emailField.classList.add('hidden');
+                formTitle.textContent = 'Войти в аккаунт';
+                formSubtitle.textContent = 'Введите ваши данные для входа';
+                submitBtn.textContent = 'Войти';
+                toggleLink.textContent = 'Зарегистрироваться';
+            } else {
+                emailField.classList.remove('hidden');
+                formTitle.textContent = 'Создать аккаунт';
+                formSubtitle.textContent = 'Заполните форму для регистрации';
+                submitBtn.textContent = 'Зарегистрироваться';
+                toggleLink.textContent = 'Войти';
+            }
+            
+            // Сброс ошибок при переключении
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('error');
+            });
+        });
+        
+        // Валидация формы
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Проверка email (только для регистрации)
+            if(!isLoginForm) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if(!emailRegex.test(emailInput.value.trim())) {
+                    emailInput.classList.add('error');
+                    document.getElementById('emailError').classList.add('show');
+                    isValid = false;
+                } else {
+                    emailInput.classList.remove('error');
+                    document.getElementById('emailError').classList.remove('show');
+                }
+            }
+            
+            // Проверка имени (только для регистрации)
+            if(!isLoginForm) {
+                if(nameInput.value.trim() === '') {
+                    nameInput.classList.add('error');
+                    document.getElementById('nameError').classList.add('show');
+                    isValid = false;
+                } else {
+                    nameInput.classList.remove('error');
+                    document.getElementById('nameError').classList.remove('show');
+                }
+            }
+            
+            // Проверка пароля (для обеих форм)
+            if(passwordInput.value.length < 8) {
+                passwordInput.classList.add('error');
+                document.getElementById('passwordError').classList.add('show');
+                isValid = false;
+            } else {
+                passwordInput.classList.remove('error');
+                document.getElementById('passwordError').classList.remove('show');
+            }
+            
+            // Если форма валидна
+            if(isValid) {
+                alert(isLoginForm ? 'Вход выполнен успешно!' : 'Регистрация прошла успешно!');
+                form.reset();
+            }
+        });
+        
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        
+        // Сброс ошибок при вводе
+        [nameInput, emailInput, passwordInput].forEach(input => {
+            input.addEventListener('input', function() {
+                if(this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    document.getElementById(`${this.id}Error`).classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
